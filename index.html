@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI PDF Analyst</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; max-width: 800px; margin: 40px auto; background: #f4f4f9; padding: 20px; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #333; text-align: center; }
+        .box { border: 1px solid #ddd; padding: 15px; border-radius: 5px; margin-top: 20px; background: #fafafa; }
+        button { background: #007BFF; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; }
+        button:hover { background: #0056b3; }
+        input[type="text"] { width: 70%; padding: 10px; }
+        .result { font-weight: bold; color: #2c3e50; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📄 AI PDF Summarizer & Chat</h1>
+
+        <div class="box">
+            <h3>Step 1: Upload PDF</h3>
+            <form action="/" method="post" enctype="multipart/form-data">
+                <input type="file" name="pdf_file" required accept=".pdf">
+                <button type="submit">Generate Summary</button>
+            </form>
+        </div>
+
+        {% if summary %}
+        <div class="box" style="border-left: 5px solid #28a745;">
+            <h3>📝 Summary:</h3>
+            <p>{{ summary }}</p>
+        </div>
+        {% endif %}
+
+        <div class="box">
+            <h3>Step 2: Ask a Question</h3>
+            <form action="/" method="post">
+                <input type="text" name="question" placeholder="What is the main conclusion?" required>
+                <input type="hidden" name="previous_summary" value="{{ summary }}">
+                <button type="submit">Ask AI</button>
+            </form>
+            
+            {% if answer %}
+            <div style="margin-top: 15px; padding: 10px; background: #e2e6ea; border-radius: 5px;">
+                <strong>🤖 AI Answer:</strong> <span class="result">{{ answer }}</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
